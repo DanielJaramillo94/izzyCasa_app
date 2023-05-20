@@ -1,4 +1,4 @@
-# izzy_house_app
+# izzy_casa_app
 
 A new Flutter project.
 

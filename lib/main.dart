@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:izzy_house_app/ui/custom_button.dart';
-import 'package:izzy_house_app/ui/custom_input.dart';
+import 'package:izzy_casa_app/ui/custom_button.dart';
+import 'package:izzy_casa_app/ui/custom_input.dart';
 
 void main() {
   runApp(const MyApp());
