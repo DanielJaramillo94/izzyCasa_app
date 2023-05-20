@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "767406330830",
+    "project_id": "izzycasa",
+    "storage_bucket": "izzycasa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767406330830:android:3d0f15efef60de8758919f",
+        "android_client_info": {
+          "package_name": "com.example.izzy_casa_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767406330830-vplm0lrf13ip9nk7hda3at6bei3ssp48.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmjv2Cywz4a08_ruGvEfJtKjINZouKWYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767406330830-vplm0lrf13ip9nk7hda3at6bei3ssp48.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
