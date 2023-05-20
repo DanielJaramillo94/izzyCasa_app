@@ -6,11 +6,15 @@ class CustomInput extends StatelessWidget {
     required this.label,
     required this.icon,
     this.obscureText = false,
+    this.validator,
+    this.inputController,
   });
 
   final String label;
   final IconData icon;
   final bool obscureText;
+  final FormFieldValidator<String>? validator;
+  final TextEditingController? inputController;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +39,8 @@ class CustomInput extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: TextFormField(
+          controller: inputController,
+          validator: validator,
           obscureText: obscureText,
           cursorColor: Colors.grey,
           style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),

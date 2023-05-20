@@ -1,13 +1,23 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:izzy_casa_app/firebase_options.dart';
-import 'package:izzy_casa_app/ui/custom_button.dart';
-import 'package:izzy_casa_app/ui/custom_input.dart';
+import 'package:izzy_casa_app/screens/login.screen.dart';
+import 'package:izzy_casa_app/providers/auth.provider.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
-  runApp(const MyApp());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<AuthProvider>(
+          create: (_) => AuthProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
@@ -33,45 +43,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: SizedBox(
-          width: 300,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Login',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
-              ),
-              Text(
-                'Ingresa para continuar.',
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: 50),
-              CustomInput(
-                label: 'CORREO',
-                icon: Icons.email_outlined,
-              ),
-              SizedBox(height: 20),
-              CustomInput(
-                label: 'CONTRASEÑA',
-                icon: Icons.lock_outline,
-                obscureText: true,
-              ),
-              SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerRight,
-                child: CustomButton(),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+    return const LoginScreen();
   }
 }
