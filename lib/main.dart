@@ -18,22 +18,36 @@ void main() async {
           create: (_) => AuthProvider(),
         ),
       ],
-      child: const MyApp(),
+      child: Builder(builder: (context) {
+        var authProvider = Provider.of<AuthProvider>(
+          context,
+          listen: false,
+        );
+        return MyApp(authProvider: authProvider);
+      }),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key, required this.authProvider});
+
+  final AuthProvider authProvider;
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late final MyRouter goRouter;
+  @override
+  void initState() {
+    super.initState();
+    goRouter = MyRouter(widget.authProvider);
+  }
 
   @override
   Widget build(BuildContext context) {
-    var router = MyRouter(
-      Provider.of<AuthProvider>(
-        context,
-        listen: false,
-      ),
-    ).router;
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -41,7 +55,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
       ),
-      routerConfig: router,
+      routerConfig: goRouter.router,
     );
   }
 }
