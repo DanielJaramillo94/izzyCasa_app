@@ -35,7 +35,7 @@ class MyRouter {
           GoRoute(
             path: 'temperature',
             builder: (BuildContext context, GoRouterState state) {
-              return const TemperatureScreen();
+              return TemperatureScreen();
             },
           ),
         ],
