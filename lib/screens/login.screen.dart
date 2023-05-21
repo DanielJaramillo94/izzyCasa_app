@@ -71,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: CustomButton(
+                    text: 'INGRESAR',
                     onPressed: () async {
                       var authProvider = Provider.of<AuthProvider>(
                         context,

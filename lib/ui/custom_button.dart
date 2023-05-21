@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
+    required this.text,
     this.onPressed,
   });
 
+  final String text;
   final VoidCallback? onPressed;
 
   @override
@@ -23,6 +25,7 @@ class CustomButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
@@ -30,9 +33,9 @@ class CustomButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              'INGRESAR',
-              style: TextStyle(
+            Text(
+              text,
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),

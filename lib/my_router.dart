@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:izzy_casa_app/providers/auth.provider.dart';
 import 'package:izzy_casa_app/screens/home.screen.dart';
 import 'package:izzy_casa_app/screens/login.screen.dart';
+import 'package:izzy_casa_app/screens/temperature.screen.dart';
 import 'package:provider/provider.dart';
 
 class MyRouter {
@@ -11,6 +12,7 @@ class MyRouter {
   final AuthProvider authProvider;
   late final router = GoRouter(
     refreshListenable: authProvider,
+    debugLogDiagnostics: true,
     routes: <RouteBase>[
       GoRoute(
         path: '/',
@@ -25,9 +27,15 @@ class MyRouter {
         },
         routes: <RouteBase>[
           GoRoute(
-            path: 'details',
+            path: 'home',
             builder: (BuildContext context, GoRouterState state) {
               return const HomeScreen();
+            },
+          ),
+          GoRoute(
+            path: 'temperature',
+            builder: (BuildContext context, GoRouterState state) {
+              return const TemperatureScreen();
             },
           ),
         ],
