@@ -68,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                const AuthStatus(),
                 Align(
                   alignment: Alignment.centerRight,
                   child: CustomButton(
@@ -98,33 +97,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class AuthStatus extends StatelessWidget {
-  const AuthStatus({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    var userStatusStream = context.watch<AuthProvider>().userStatusStream;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Status'),
-        StreamBuilder(
-          stream: userStatusStream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return const Text('Logged in');
-            } else {
-              return const Text('Not logged in');
-            }
-          },
-        ),
-      ],
     );
   }
 }

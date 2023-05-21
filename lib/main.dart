@@ -1,18 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:izzy_casa_app/firebase_options.dart';
+import 'package:izzy_casa_app/my_router.dart';
 import 'package:izzy_casa_app/screens/login.screen.dart';
 import 'package:izzy_casa_app/providers/auth.provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
     MultiProvider(
       providers: [
-        Provider<AuthProvider>(
+        ChangeNotifierProvider<AuthProvider>(
           create: (_) => AuthProvider(),
         ),
       ],
@@ -26,14 +28,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    var router = MyRouter(
+      Provider.of<AuthProvider>(
+        context,
+        listen: false,
+      ),
+    ).router;
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      routerConfig: router,
     );
   }
 }

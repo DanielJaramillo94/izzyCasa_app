@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-class AuthProvider {
+class AuthProvider extends ChangeNotifier {
+  UserData? userData;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final StreamController<UserData?> _userStatusController =
       StreamController<UserData?>();
@@ -12,8 +14,12 @@ class AuthProvider {
   AuthProvider() {
     _firebaseAuth.authStateChanges().listen((User? user) {
       _userStatusController.add(UserData.fromFirebaseUser(user));
+      userData = UserData.fromFirebaseUser(user);
+      notifyListeners();
     });
   }
+
+  bool get isAuthenticated => _firebaseAuth.currentUser != null;
 
   Future<void> signInWithEmailAndPassword({
     required String email,
@@ -29,8 +35,10 @@ class AuthProvider {
     await _firebaseAuth.signOut();
   }
 
+  @override
   void dispose() {
     _userStatusController.close();
+    super.dispose();
   }
 }
 
