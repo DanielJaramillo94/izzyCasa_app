@@ -24,6 +24,12 @@ class HomeScreen extends StatelessWidget {
                   route: '/temperature',
                 ),
                 const SizedBox(height: 20),
+                const HomeCard(
+                  label: 'Luces',
+                  image: 'assets/images/home/light.png',
+                  route: '/lights',
+                ),
+                const SizedBox(height: 20),
                 CustomButton(
                   text: 'CERRAR SESIÓN',
                   onPressed: () async {

@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-class HomeCard extends StatelessWidget {
-  const HomeCard({
-    super.key,
-    required this.label,
-    required this.image,
-    required this.route,
-  });
+class LightCards extends StatelessWidget {
+  const LightCards(
+      {super.key,
+      required this.label,
+      required this.image,
+      required this.onTap});
 
   final String label;
   final String image;
-  final String route;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.go(route);
-      },
+      onTap: onTap,
       child: Container(
         height: 120,
         decoration: BoxDecoration(
