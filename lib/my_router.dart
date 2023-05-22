@@ -5,6 +5,7 @@ import 'package:izzy_casa_app/screens/home.screen.dart';
 import 'package:izzy_casa_app/screens/login.screen.dart';
 import 'package:izzy_casa_app/screens/light.screen.dart';
 import 'package:izzy_casa_app/screens/temperature.screen.dart';
+import 'package:izzy_casa_app/screens/voice.screen.dart';
 import 'package:provider/provider.dart';
 
 class MyRouter {
@@ -43,6 +44,12 @@ class MyRouter {
             path: 'lights',
             builder: (BuildContext context, GoRouterState state) {
               return LightScreen();
+            },
+          ),
+          GoRoute(
+            path: 'voice',
+            builder: (BuildContext context, GoRouterState state) {
+              return VoiceScreen();
             },
           )
         ],

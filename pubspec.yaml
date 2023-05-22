@@ -40,6 +40,8 @@ dependencies:
   firebase_auth: ^4.6.1
   go_router: ^7.0.2
   syncfusion_flutter_charts: ^21.2.5
+  avatar_glow: ^2.0.2
+  speech_to_text: ^6.1.1
 
 dev_dependencies:
   flutter_test:

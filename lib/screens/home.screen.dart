@@ -30,6 +30,12 @@ class HomeScreen extends StatelessWidget {
                   route: '/lights',
                 ),
                 const SizedBox(height: 20),
+                const HomeCard(
+                  label: 'Camando voz',
+                  image: 'assets/images/home/microphone.png',
+                  route: '/voice',
+                ),
+                const SizedBox(height: 20),
                 CustomButton(
                   text: 'CERRAR SESIÓN',
                   onPressed: () async {
