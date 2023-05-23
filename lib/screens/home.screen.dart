@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 const HomeCard(
                   label: 'Luces',
-                  image: 'assets/images/home/light.png',
+                  image: 'assets/images/home/light-on.png',
                   route: '/lights',
                 ),
                 const SizedBox(height: 20),
