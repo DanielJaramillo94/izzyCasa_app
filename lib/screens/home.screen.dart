@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:izzy_casa_app/providers/auth.provider.dart';
 import 'package:izzy_casa_app/ui/custom_button.dart';
 import 'package:izzy_casa_app/ui/home/home_card.dart';
+import 'package:izzy_casa_app/utils/custom_http_client.dart';
+import 'package:izzy_casa_app/utils/locator.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -51,6 +53,19 @@ class HomeScreen extends StatelessWidget {
                           content: Text('Ha ocurrido al cerrar sesión.'),
                         ),
                       );
+                    }
+                  },
+                ),
+                CustomButton(
+                  text: 'TEST',
+                  onPressed: () async {
+                    var httpClient = getIt.get<CustomHttpClient>();
+                    var response = await httpClient.get(
+                      context,
+                      'https://69f2-2800-e2-7b7f-f3f5-ff33-4ad0-318d-7e34.ngrok.io/lights',
+                    );
+                    if (response != null) {
+                      print(response.body);
                     }
                   },
                 )

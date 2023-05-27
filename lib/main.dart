@@ -4,6 +4,8 @@ import 'package:izzy_casa_app/firebase_options.dart';
 import 'package:izzy_casa_app/my_router.dart';
 import 'package:izzy_casa_app/screens/login.screen.dart';
 import 'package:izzy_casa_app/providers/auth.provider.dart';
+import 'package:izzy_casa_app/utils/locator.dart';
+import 'package:izzy_casa_app/utils/widgets/error_handling.widget.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -11,6 +13,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  setupLocator();
   runApp(
     MultiProvider(
       providers: [
@@ -30,9 +33,11 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key, required this.authProvider});
+  MyApp({super.key, required this.authProvider});
 
   final AuthProvider authProvider;
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -56,6 +61,13 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       routerConfig: goRouter.router,
+      scaffoldMessengerKey: widget.scaffoldMessengerKey,
+      builder: (_, child) {
+        return ErrorHandlerWidget(
+          SafeArea(child: child!),
+          scaffoldMessengerKey: widget.scaffoldMessengerKey,
+        );
+      },
     );
   }
 }
