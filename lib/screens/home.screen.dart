@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 const HomeCard(
-                  label: 'Camando voz',
+                  label: 'Comando de voz',
                   image: 'assets/images/home/microphone.png',
                   route: '/voice',
                 ),

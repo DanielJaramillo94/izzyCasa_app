@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:izzy_casa_app/extensions/iterable_insert_between.dart';
-import 'package:izzy_casa_app/ui/lights/light_cards.dart';
+import 'package:izzy_casa_app/ui/lights/light_card.dart';
 
 class LightScreen extends StatefulWidget {
   const LightScreen({

@@ -60,14 +60,18 @@ class _LightCardState extends State<LightCard> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                widget.light.label,
-                style: TextStyle(
-                  fontSize: 27,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black.withOpacity(0.55),
+              Expanded(
+                child: Text(
+                  widget.light.label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black.withOpacity(0.55),
+                  ),
                 ),
               ),
+              const SizedBox(width: 20),
               SizedBox(
                 height: 100,
                 width: 100,

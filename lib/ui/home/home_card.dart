@@ -38,14 +38,18 @@ class HomeCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 27,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black.withOpacity(0.55),
+              Expanded(
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black.withOpacity(0.55),
+                  ),
                 ),
               ),
+              const SizedBox(width: 20),
               SizedBox(
                 height: 100,
                 width: 100,
