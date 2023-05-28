@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:izzy_casa_app/extensions/iterable_insert_between.dart';
 import 'package:izzy_casa_app/ui/lights/light_cards.dart';
 
 class LightScreen extends StatefulWidget {
-  LightScreen({
+  const LightScreen({
     super.key,
   });
 
@@ -14,46 +15,33 @@ class _LightScreenState extends State<LightScreen> {
   bool statusPrincipal = false;
   bool statusLivingroom = false;
 
-  void toggleStatusPrincipal() {
-    setState(() {
-      statusPrincipal = !statusPrincipal;
-    });
-  }
-
-  void toggleStatusLivingroom() {
-    setState(() {
-      statusLivingroom = !statusLivingroom;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    String imageOff = "assets/images/home/swich-off.png";
-    String imageON = "assets/images/home/swich-on.png";
-    String imagePrincipal = statusPrincipal ? imageON : imageOff;
-    String imageLivingroom = statusLivingroom ? imageON : imageOff;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Luces'),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: EdgeInsets.all(15.0),
           child: Center(
-            child: Column(
-              children: [
-                LightCards(
-                  label: 'Principal',
-                  image: imagePrincipal,
-                  onTap: toggleStatusPrincipal,
+            child: LightsList(
+              lights: [
+                Light(
+                  id: 'room0',
+                  label: 'Cuarto principal',
+                  initialState: true,
                 ),
-                const SizedBox(height: 20),
-                LightCards(
-                  label: 'Sala',
-                  image: imageLivingroom,
-                  onTap: toggleStatusLivingroom,
-                )
+                Light(
+                  id: 'room1',
+                  label: 'Cuarto Pepito',
+                  initialState: false,
+                ),
+                Light(
+                  id: 'room2',
+                  label: 'Cuarto Fulanita',
+                  initialState: false,
+                ),
               ],
             ),
           ),
@@ -61,4 +49,35 @@ class _LightScreenState extends State<LightScreen> {
       ),
     );
   }
+}
+
+class LightsList extends StatelessWidget {
+  const LightsList({
+    super.key,
+    required this.lights,
+  });
+
+  final List<Light> lights;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: lights
+          .map<Widget>((light) => LightCard(light: light))
+          .insertBetween(const SizedBox(height: 30))
+          .toList(),
+    );
+  }
+}
+
+class Light {
+  const Light({
+    required this.id,
+    required this.label,
+    required this.initialState,
+  });
+
+  final String id;
+  final String label;
+  final bool initialState;
 }

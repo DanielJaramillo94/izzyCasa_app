@@ -61,11 +61,14 @@ class CustomHttpClient {
 
   Future<SuccessfulResponse?> get(
     BuildContext context,
-    String url,
-  ) async {
+    String url, {
+    bool showLoader = true,
+  }) async {
     Uri uri = Uri.parse(url);
     http.Response? response;
-    context.showLoader();
+    if (showLoader && context.mounted) {
+      context.showLoader();
+    }
     try {
       response = await http.get(
         uri,
@@ -75,53 +78,65 @@ class CustomHttpClient {
       launchConnectionError();
       return null;
     } finally {
-      context.hideLoader();
+      if (showLoader && context.mounted) {
+        context.hideLoader();
+      }
     }
     return processResponse(response);
   }
 
   Future<SuccessfulResponse?> post(
     BuildContext context,
-    String url, [
+    String url, {
     Map<String, dynamic>? body,
-  ]) async {
+    bool showLoader = true,
+  }) async {
     Uri uri = Uri.parse(url);
     http.Response? response;
-    context.showLoader();
+    if (showLoader && context.mounted) {
+      context.showLoader();
+    }
     try {
       response = await http.post(
         uri,
-        body: jsonEncode(body),
+        body: body != null ? jsonEncode(body) : null,
         headers: await getHeaders(),
       );
     } catch (e) {
       launchConnectionError();
       return null;
     } finally {
-      context.hideLoader();
+      if (showLoader && context.mounted) {
+        context.hideLoader();
+      }
     }
     return processResponse(response);
   }
 
   Future<SuccessfulResponse?> delete(
     BuildContext context,
-    String url, [
+    String url, {
     Map<String, dynamic>? body,
-  ]) async {
+    bool showLoader = true,
+  }) async {
     Uri uri = Uri.parse(url);
     http.Response? response;
-    context.showLoader();
+    if (showLoader && context.mounted) {
+      context.showLoader();
+    }
     try {
       response = await http.delete(
         uri,
-        body: jsonEncode(body),
+        body: body != null ? jsonEncode(body) : null,
         headers: await getHeaders(),
       );
     } catch (e) {
       launchConnectionError();
       return null;
     } finally {
-      context.hideLoader();
+      if (showLoader && context.mounted) {
+        context.hideLoader();
+      }
     }
     return processResponse(response);
   }
@@ -130,15 +145,16 @@ class CustomHttpClient {
     BuildContext context,
     String url,
     Map<String, String> fields,
-    List<http.MultipartFile> filesToUpload,
-  ) async {
+    List<http.MultipartFile> filesToUpload, {
+    bool showLoader = true,
+  }) async {
     Uri uri = Uri.parse(url);
     var request = http.MultipartRequest('POST', uri);
     request.headers.addAll(await getHeaders() ?? {});
     request.fields.addAll(fields);
     request.files.addAll(filesToUpload);
     http.Response? response;
-    if (context.mounted) {
+    if (showLoader && context.mounted) {
       context.showLoader();
     }
     try {
@@ -147,7 +163,7 @@ class CustomHttpClient {
       launchConnectionError();
       return null;
     } finally {
-      if (context.mounted) {
+      if (showLoader && context.mounted) {
         context.hideLoader();
       }
     }

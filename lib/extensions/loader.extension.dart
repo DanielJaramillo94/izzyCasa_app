@@ -9,11 +9,11 @@ extension LoaderExtension on BuildContext {
       useRootNavigator: true,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return Container(
-          child: SizedBox(
-            width: 30,
-            height: 30,
-            child: Center(child: CircularProgressIndicator()),
+        return const SizedBox(
+          width: 30,
+          height: 30,
+          child: Center(
+            child: CircularProgressIndicator(),
           ),
         );
       },
@@ -42,7 +42,7 @@ extension LoaderExtension on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         content: Text(message ?? 'Cambios realizados'),
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
