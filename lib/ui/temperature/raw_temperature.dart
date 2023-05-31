@@ -42,7 +42,7 @@ class RawTemperatureListData extends StatelessWidget {
                 return Row(
                   children: [
                     Text(
-                      data[index].hour,
+                      data[index].time,
                       style: const TextStyle(
                         fontSize: 25,
                         color: Colors.black87,

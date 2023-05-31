@@ -23,7 +23,7 @@ class TemperatureChart extends StatelessWidget {
         LineSeries<Temperature, String>(
           dataSource: data,
           xValueMapper: (Temperature temperatureData, _) =>
-              temperatureData.hour,
+              temperatureData.time,
           yValueMapper: (Temperature temperatureData, _) =>
               temperatureData.measure,
           name: 'Temperatura',
