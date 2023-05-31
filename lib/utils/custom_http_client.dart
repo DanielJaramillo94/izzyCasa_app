@@ -26,7 +26,7 @@ class CustomHttpClient {
     errorStreamSinks.add(sink);
   }
 
-  Future<Map<String, String>?> getHeaders() async {
+  Future<Map<String, String>?> _getHeaders() async {
     var headers = {'Content-Type': 'application/json'};
     var token = await userAccessToken;
     if (token != null) {
@@ -60,25 +60,26 @@ class CustomHttpClient {
   }
 
   Future<SuccessfulResponse?> get(
-    BuildContext context,
     String url, {
+    BuildContext? context,
+    Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
-    Uri uri = Uri.parse(url);
+    Uri uri = Uri.parse(url)..replace(queryParameters: queryParameters);
     http.Response? response;
-    if (showLoader && context.mounted) {
+    if (context != null && showLoader && context.mounted) {
       context.showLoader();
     }
     try {
       response = await http.get(
         uri,
-        headers: await getHeaders(),
+        headers: await _getHeaders(),
       );
     } catch (e) {
       launchConnectionError();
       return null;
     } finally {
-      if (showLoader && context.mounted) {
+      if (context != null && showLoader && context.mounted) {
         context.hideLoader();
       }
     }
@@ -86,27 +87,28 @@ class CustomHttpClient {
   }
 
   Future<SuccessfulResponse?> post(
-    BuildContext context,
     String url, {
-    Map<String, dynamic>? body,
+    BuildContext? context,
+    Object? body,
+    Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
-    Uri uri = Uri.parse(url);
+    Uri uri = Uri.parse(url)..replace(queryParameters: queryParameters);
     http.Response? response;
-    if (showLoader && context.mounted) {
+    if (context != null && showLoader && context.mounted) {
       context.showLoader();
     }
     try {
       response = await http.post(
         uri,
         body: body != null ? jsonEncode(body) : null,
-        headers: await getHeaders(),
+        headers: await _getHeaders(),
       );
     } catch (e) {
       launchConnectionError();
       return null;
     } finally {
-      if (showLoader && context.mounted) {
+      if (context != null && showLoader && context.mounted) {
         context.hideLoader();
       }
     }
@@ -114,56 +116,57 @@ class CustomHttpClient {
   }
 
   Future<SuccessfulResponse?> delete(
-    BuildContext context,
     String url, {
-    Map<String, dynamic>? body,
+    BuildContext? context,
+    Object? body,
+    Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
-    Uri uri = Uri.parse(url);
+    Uri uri = Uri.parse(url)..replace(queryParameters: queryParameters);
     http.Response? response;
-    if (showLoader && context.mounted) {
+    if (context != null && showLoader && context.mounted) {
       context.showLoader();
     }
     try {
       response = await http.delete(
         uri,
         body: body != null ? jsonEncode(body) : null,
-        headers: await getHeaders(),
+        headers: await _getHeaders(),
       );
     } catch (e) {
       launchConnectionError();
       return null;
     } finally {
-      if (showLoader && context.mounted) {
+      if (context != null && showLoader && context.mounted) {
         context.hideLoader();
       }
     }
     return processResponse(response);
   }
 
-  Future<SuccessfulResponse?> postMultipart(
-    BuildContext context,
-    String url,
-    Map<String, String> fields,
-    List<http.MultipartFile> filesToUpload, {
+  Future<SuccessfulResponse?> put(
+    String url, {
+    BuildContext? context,
+    Object? body,
+    Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
-    Uri uri = Uri.parse(url);
-    var request = http.MultipartRequest('POST', uri);
-    request.headers.addAll(await getHeaders() ?? {});
-    request.fields.addAll(fields);
-    request.files.addAll(filesToUpload);
+    Uri uri = Uri.parse(url)..replace(queryParameters: queryParameters);
     http.Response? response;
-    if (showLoader && context.mounted) {
+    if (context != null && showLoader && context.mounted) {
       context.showLoader();
     }
     try {
-      response = await http.Response.fromStream(await request.send());
+      response = await http.put(
+        uri,
+        body: body != null ? jsonEncode(body) : null,
+        headers: await _getHeaders(),
+      );
     } catch (e) {
       launchConnectionError();
       return null;
     } finally {
-      if (showLoader && context.mounted) {
+      if (context != null && showLoader && context.mounted) {
         context.hideLoader();
       }
     }
