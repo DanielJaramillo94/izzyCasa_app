@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:izzy_casa_app/firebase_options.dart';
 import 'package:izzy_casa_app/my_router.dart';
+import 'package:izzy_casa_app/providers/dynamic_key.provider.dart';
 import 'package:izzy_casa_app/screens/login.screen.dart';
 import 'package:izzy_casa_app/providers/auth.provider.dart';
 import 'package:izzy_casa_app/utils/locator.dart';
@@ -19,6 +20,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider<AuthProvider>(
           create: (_) => AuthProvider(),
+        ),
+        ChangeNotifierProvider<DynamicKeyProvider>(
+          create: (_) => DynamicKeyProvider(),
         ),
       ],
       child: Builder(builder: (context) {

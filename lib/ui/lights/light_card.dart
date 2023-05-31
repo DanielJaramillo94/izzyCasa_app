@@ -33,7 +33,7 @@ class _LightCardState extends State<LightCard> {
         changeState();
         var httpClient = getIt.get<CustomHttpClient>();
         var response = await httpClient.post(
-          'https://69f2-2800-e2-7b7f-f3f5-ff33-4ad0-318d-7e34.ngrok.io/lights/${widget.light.id}}',
+          'http://192.168.1.5:3000/lights/${widget.light.id}}',
           queryParameters: {'status': lightState ? 'true' : 'false'},
         );
         if (response == null) {
