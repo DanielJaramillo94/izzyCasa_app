@@ -15,7 +15,7 @@ class LightsProvider extends ChangeNotifier {
   }
 
   Future<void> getLights() async {
-    var response = await httpClient.get('http://192.168.1.5:3000/lights');
+    var response = await httpClient.get('/lights');
     if (response != null) {
       var rawLights = jsonDecode(response.body) as List;
       lights = rawLights.map((e) => Light.fromJson(e)).toList();

@@ -20,7 +20,7 @@ class DynamicKeyProvider extends ChangeNotifier {
       dynamicKey = null;
       return;
     }
-    var response = await httpClient.get('http://192.168.1.5:3000/dynamicKey');
+    var response = await httpClient.get('/dynamicKey');
     int millisecondsDelay = 10000;
     if (response != null) {
       var newDynamicKey = DynamicKey.fromJson(jsonDecode(response.body));

@@ -21,7 +21,7 @@ class TemperatureProvider extends ChangeNotifier {
       return;
     }
     print('getTemperatures called at ${DateTime.now()}');
-    var response = await httpClient.get('http://192.168.1.5:3000/temperature');
+    var response = await httpClient.get('/temperature');
     int millisecondsDelay = 5000;
     if (response != null) {
       var rawTemperatures = jsonDecode(response.body) as List;

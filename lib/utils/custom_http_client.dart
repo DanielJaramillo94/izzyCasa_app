@@ -11,6 +11,7 @@ import 'dart:developer';
 class CustomHttpClient {
   final List<StreamSink<SnackBarMessage?>> errorStreamSinks = [];
   CustomHttpClient();
+  String _domain = 'http://192.168.1.5:3000';
 
   Future<String?> get userAccessToken async {
     return FirebaseAuth.instance.currentUser?.getIdToken();
@@ -20,6 +21,10 @@ class CustomHttpClient {
     for (var errorSink in errorStreamSinks) {
       errorSink.add(SnackBarMessage(errorMessage));
     }
+  }
+
+  setDomain(String newDomain) {
+    _domain = newDomain;
   }
 
   void addErrorStreamSink(StreamSink<SnackBarMessage?> sink) {
@@ -64,11 +69,12 @@ class CustomHttpClient {
   }
 
   Future<SuccessfulResponse?> get(
-    String url, {
+    String path, {
     BuildContext? context,
     Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
+    String url = '$_domain$path';
     Uri uri = Uri.parse(url).replace(queryParameters: queryParameters);
     http.Response? response;
     if (context != null && showLoader && context.mounted) {
@@ -91,12 +97,13 @@ class CustomHttpClient {
   }
 
   Future<SuccessfulResponse?> post(
-    String url, {
+    String path, {
     BuildContext? context,
     Object? body,
     Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
+    String url = '$_domain$path';
     Uri uri = Uri.parse(url).replace(queryParameters: queryParameters);
     http.Response? response;
     if (context != null && showLoader && context.mounted) {
@@ -120,12 +127,13 @@ class CustomHttpClient {
   }
 
   Future<SuccessfulResponse?> delete(
-    String url, {
+    String path, {
     BuildContext? context,
     Object? body,
     Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
+    String url = '$_domain$path';
     Uri uri = Uri.parse(url).replace(queryParameters: queryParameters);
     http.Response? response;
     if (context != null && showLoader && context.mounted) {
@@ -149,12 +157,13 @@ class CustomHttpClient {
   }
 
   Future<SuccessfulResponse?> put(
-    String url, {
+    String path, {
     BuildContext? context,
     Object? body,
     Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
+    String url = '$_domain$path';
     Uri uri = Uri.parse(url).replace(queryParameters: queryParameters);
     http.Response? response;
     if (context != null && showLoader && context.mounted) {

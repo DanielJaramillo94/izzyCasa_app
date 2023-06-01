@@ -33,7 +33,7 @@ class _LightCardState extends State<LightCard> {
         changeState();
         var httpClient = getIt.get<CustomHttpClient>();
         var response = await httpClient.post(
-          'http://192.168.1.5:3000/lights/${widget.light.location}',
+          '/lights/${widget.light.location}',
           queryParameters: {'status': lightState ? 'true' : 'false'},
         );
         if (response == null) {
