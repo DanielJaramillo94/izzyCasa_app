@@ -1,7 +1,10 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:izzy_casa_app/extensions/iterable_insert_between.dart';
+import 'package:izzy_casa_app/models/light.model.dart';
 import 'package:izzy_casa_app/providers/lights.provider.dart';
+import 'package:izzy_casa_app/utils/custom_http_client.dart';
+import 'package:izzy_casa_app/utils/locator.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:izzy_casa_app/ui/voice/voice_cards.dart';
@@ -40,13 +43,11 @@ class _VoiceScreenState extends State<VoiceScreen> {
               if (available) {
                 setState(() {
                   isListening = true;
-                  speechToText.listen(onResult: (result) {
+                  speechToText.listen(onResult: (result) async {
                     setState(() {
                       text = result.recognizedWords;
-                      if (text == "cocina encender") {
-                        print(text);
-                      }
                     });
+                    setLightState(lights);
                   });
                 });
               }
@@ -99,5 +100,74 @@ class _VoiceScreenState extends State<VoiceScreen> {
         ),
       ),
     );
+  }
+
+  void setLightState(List<Light> lights) {
+    (String, bool)? commandedLight = changeLightStateByText(
+      text,
+      lights.map((light) => light.label).toList(),
+    );
+    print(commandedLight);
+    if (commandedLight == null) {
+      return;
+    }
+    var httpClient = getIt.get<CustomHttpClient>();
+    String? location = labelToLocation(commandedLight.$1, lights);
+    if (location == null) {
+      return;
+    }
+    httpClient.post(
+      '/lights/$location',
+      queryParameters: {'status': commandedLight.$2 ? 'true' : 'false'},
+    );
+  }
+
+  String? labelToLocation(String label, List<Light> lights) {
+    for (Light light in lights) {
+      if (light.label == label) {
+        return light.location;
+      }
+    }
+    return null;
+  }
+
+  (String label, bool state)? changeLightStateByText(
+    String text,
+    List<String> locations,
+  ) {
+    List<String> onKeywords = ['encender', 'prender', 'activar'];
+    List<String> offKeywords = ['apagar', 'apaga', 'desactivar'];
+
+    String? location;
+    for (String name in locations) {
+      if (text.toLowerCase().contains(name.toLowerCase())) {
+        location = name;
+        break;
+      }
+    }
+
+    if (location == null) {
+      return null;
+    }
+
+    bool? state;
+    for (String keyword in onKeywords) {
+      if (text.toLowerCase().contains(keyword.toLowerCase())) {
+        state = true;
+        break;
+      }
+    }
+    for (String keyword in offKeywords) {
+      if (text.toLowerCase().contains(keyword.toLowerCase())) {
+        state = false;
+        break;
+      }
+    }
+
+    if (state == null) {
+      return null;
+    }
+
+    return (location, state);
   }
 }
