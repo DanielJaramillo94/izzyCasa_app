@@ -23,11 +23,24 @@ void main() async {
         ChangeNotifierProvider<AuthProvider>(
           create: (_) => AuthProvider(),
         ),
-        ChangeNotifierProvider<DynamicKeyProvider>(
-          create: (_) => DynamicKeyProvider(),
+        ChangeNotifierProxyProvider<AuthProvider, DynamicKeyProvider>(
+          create: (BuildContext context) => DynamicKeyProvider(
+            Provider.of<AuthProvider>(context, listen: false),
+          ),
+          update: (
+            BuildContext context,
+            AuthProvider auth,
+            DynamicKeyProvider? dynamicKey,
+          ) =>
+              DynamicKeyProvider(auth),
         ),
-        ChangeNotifierProvider<TemperatureProvider>(
-          create: (_) => TemperatureProvider(),
+        ChangeNotifierProxyProvider<AuthProvider, TemperatureProvider>(
+          create: (BuildContext context) => TemperatureProvider(
+            Provider.of<AuthProvider>(context, listen: false),
+          ),
+          update: (BuildContext context, AuthProvider auth,
+                  TemperatureProvider? temperature) =>
+              TemperatureProvider(auth),
         ),
         ChangeNotifierProvider<LightsProvider>(
           create: (_) => LightsProvider(),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:izzy_casa_app/models/dynamic_key.dart';
+import 'package:izzy_casa_app/providers/auth.provider.dart';
 import 'package:izzy_casa_app/utils/custom_http_client.dart';
 import 'package:izzy_casa_app/utils/locator.dart';
 
@@ -10,11 +11,15 @@ class DynamicKeyProvider extends ChangeNotifier {
 
   var httpClient = getIt.get<CustomHttpClient>();
 
-  DynamicKeyProvider() {
-    getDynamicKey();
+  DynamicKeyProvider(AuthProvider authProvider) {
+    getDynamicKey(authProvider);
   }
 
-  Future<void> getDynamicKey() async {
+  Future<void> getDynamicKey(AuthProvider authProvider) async {
+    if (!authProvider.isAuthenticated) {
+      dynamicKey = null;
+      return;
+    }
     var response = await httpClient.get('http://192.168.1.5:3000/dynamicKey');
     int millisecondsDelay = 10000;
     if (response != null) {
@@ -26,7 +31,7 @@ class DynamicKeyProvider extends ChangeNotifier {
       }
     }
     Future.delayed(Duration(seconds: millisecondsDelay ~/ 1000), () {
-      getDynamicKey();
+      getDynamicKey(authProvider);
     });
   }
 }

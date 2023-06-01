@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:izzy_casa_app/models/temperature/temperature.model.dart';
+import 'package:izzy_casa_app/providers/auth.provider.dart';
 import 'package:izzy_casa_app/utils/custom_http_client.dart';
 import 'package:izzy_casa_app/utils/locator.dart';
 
@@ -10,11 +11,15 @@ class TemperatureProvider extends ChangeNotifier {
 
   var httpClient = getIt.get<CustomHttpClient>();
 
-  TemperatureProvider() {
-    getTemperatures();
+  TemperatureProvider(AuthProvider authProvider) {
+    getTemperatures(authProvider);
   }
 
-  Future<void> getTemperatures() async {
+  Future<void> getTemperatures(AuthProvider authProvider) async {
+    if (!authProvider.isAuthenticated) {
+      temperatures = [];
+      return;
+    }
     print('getTemperatures called at ${DateTime.now()}');
     var response = await httpClient.get('http://192.168.1.5:3000/temperature');
     int millisecondsDelay = 5000;
@@ -25,7 +30,7 @@ class TemperatureProvider extends ChangeNotifier {
       notifyListeners();
     }
     Future.delayed(Duration(seconds: millisecondsDelay ~/ 1000), () {
-      getTemperatures();
+      getTemperatures(authProvider);
     });
   }
 }
