@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:izzy_casa_app/extensions/iterable_insert_between.dart';
+import 'package:izzy_casa_app/models/light.model.dart';
+import 'package:izzy_casa_app/providers/lights.provider.dart';
 import 'package:izzy_casa_app/ui/lights/light_card.dart';
+import 'package:provider/provider.dart';
 
 class LightScreen extends StatefulWidget {
   const LightScreen({
@@ -17,32 +20,17 @@ class _LightScreenState extends State<LightScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var lights = context.watch<LightsProvider>().lights;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Luces'),
       ),
-      body: const SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Center(
-            child: LightsList(
-              lights: [
-                Light(
-                  id: 'room0',
-                  label: 'Cuarto principal',
-                  initialState: true,
-                ),
-                Light(
-                  id: 'room1',
-                  label: 'Cuarto Pepito',
-                  initialState: false,
-                ),
-                Light(
-                  id: 'room2',
-                  label: 'Cuarto Fulanita',
-                  initialState: false,
-                ),
-              ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Center(
+              child: LightsList(lights: lights),
             ),
           ),
         ),
@@ -68,16 +56,4 @@ class LightsList extends StatelessWidget {
           .toList(),
     );
   }
-}
-
-class Light {
-  const Light({
-    required this.id,
-    required this.label,
-    required this.initialState,
-  });
-
-  final String id;
-  final String label;
-  final bool initialState;
 }

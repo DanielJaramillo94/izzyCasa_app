@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:izzy_casa_app/firebase_options.dart';
 import 'package:izzy_casa_app/my_router.dart';
 import 'package:izzy_casa_app/providers/dynamic_key.provider.dart';
+import 'package:izzy_casa_app/providers/lights.provider.dart';
 import 'package:izzy_casa_app/providers/temperature.provider.dart';
 import 'package:izzy_casa_app/screens/login.screen.dart';
 import 'package:izzy_casa_app/providers/auth.provider.dart';
@@ -27,6 +28,9 @@ void main() async {
         ),
         ChangeNotifierProvider<TemperatureProvider>(
           create: (_) => TemperatureProvider(),
+        ),
+        ChangeNotifierProvider<LightsProvider>(
+          create: (_) => LightsProvider(),
         ),
       ],
       child: Builder(builder: (context) {

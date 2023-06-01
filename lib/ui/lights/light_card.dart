@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:izzy_casa_app/screens/light.screen.dart';
+import 'package:izzy_casa_app/models/light.model.dart';
 import 'package:izzy_casa_app/utils/custom_http_client.dart';
 import 'package:izzy_casa_app/utils/locator.dart';
 
@@ -23,7 +23,7 @@ class _LightCardState extends State<LightCard> {
   @override
   void initState() {
     super.initState();
-    lightState = widget.light.initialState;
+    lightState = widget.light.state;
   }
 
   @override
@@ -33,7 +33,7 @@ class _LightCardState extends State<LightCard> {
         changeState();
         var httpClient = getIt.get<CustomHttpClient>();
         var response = await httpClient.post(
-          'http://192.168.1.5:3000/lights/${widget.light.id}',
+          'http://192.168.1.5:3000/lights/${widget.light.location}',
           queryParameters: {'status': lightState ? 'true' : 'false'},
         );
         if (response == null) {
