@@ -26,6 +26,10 @@ class CustomHttpClient {
     errorStreamSinks.add(sink);
   }
 
+  void removeErrorStreamSink(StreamSink<SnackBarMessage?> sink) {
+    errorStreamSinks.remove(sink);
+  }
+
   Future<Map<String, String>?> _getHeaders() async {
     var headers = {'Content-Type': 'application/json'};
     var token = await userAccessToken;
@@ -65,7 +69,7 @@ class CustomHttpClient {
     Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
-    Uri uri = Uri.parse(url)..replace(queryParameters: queryParameters);
+    Uri uri = Uri.parse(url).replace(queryParameters: queryParameters);
     http.Response? response;
     if (context != null && showLoader && context.mounted) {
       context.showLoader();
@@ -93,7 +97,7 @@ class CustomHttpClient {
     Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
-    Uri uri = Uri.parse(url)..replace(queryParameters: queryParameters);
+    Uri uri = Uri.parse(url).replace(queryParameters: queryParameters);
     http.Response? response;
     if (context != null && showLoader && context.mounted) {
       context.showLoader();
@@ -122,7 +126,7 @@ class CustomHttpClient {
     Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
-    Uri uri = Uri.parse(url)..replace(queryParameters: queryParameters);
+    Uri uri = Uri.parse(url).replace(queryParameters: queryParameters);
     http.Response? response;
     if (context != null && showLoader && context.mounted) {
       context.showLoader();
@@ -151,7 +155,7 @@ class CustomHttpClient {
     Map<String, String?>? queryParameters,
     bool showLoader = true,
   }) async {
-    Uri uri = Uri.parse(url)..replace(queryParameters: queryParameters);
+    Uri uri = Uri.parse(url).replace(queryParameters: queryParameters);
     http.Response? response;
     if (context != null && showLoader && context.mounted) {
       context.showLoader();

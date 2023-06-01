@@ -16,7 +16,7 @@ class DynamicKeyProvider extends ChangeNotifier {
 
   Future<void> getDynamicKey() async {
     var response = await httpClient.get('http://192.168.1.5:3000/dynamicKey');
-    int millisecondsDelay = 1000;
+    int millisecondsDelay = 10000;
     if (response != null) {
       var newDynamicKey = DynamicKey.fromJson(jsonDecode(response.body));
       if (newDynamicKey.code != dynamicKey?.code) {

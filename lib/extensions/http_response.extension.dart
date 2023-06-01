@@ -23,7 +23,8 @@ extension Http4xxResponseExtension on Response {
     try {
       var responseBody = json.decode(body);
       if (responseBody is Map) {
-        return 'Parece que tenemos dificultades en la app 😥.';
+        return responseBody['message'] ??
+            'Parece que tenemos dificultades en la app 😥.';
       }
       List<RequestInconsistency> inconsistencies = (json.decode(body) as List)
           .map<RequestInconsistency>(

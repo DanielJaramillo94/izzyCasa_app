@@ -42,6 +42,9 @@ class _ErrorHandlerWidgetState extends State<ErrorHandlerWidget> {
 
   @override
   void dispose() {
+    getIt
+        .get<CustomHttpClient>()
+        .removeErrorStreamSink(errorStreamController.sink);
     errorStreamController.close();
     super.dispose();
   }
