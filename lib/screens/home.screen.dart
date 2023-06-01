@@ -3,6 +3,7 @@ import 'package:izzy_casa_app/providers/auth.provider.dart';
 import 'package:izzy_casa_app/ui/custom_button.dart';
 import 'package:izzy_casa_app/ui/home/dynamic_key/dynamic_key_box.dart';
 import 'package:izzy_casa_app/ui/home/home_card.dart';
+import 'package:izzy_casa_app/ui/home/main_door_locker.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,7 +21,14 @@ class HomeScreen extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  const DynamicKeyBox(),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DynamicKeyBox(),
+                      SizedBox(width: 20),
+                      MainDoorLocker()
+                    ],
+                  ),
                   const SizedBox(height: 20),
                   const HomeCard(
                     label: 'Temperatura',
