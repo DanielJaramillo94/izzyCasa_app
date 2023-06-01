@@ -106,8 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content:
-                                    Text('Ha ocurrido en el inicio de sesión.'),
+                                content: Text(
+                                    'Ha ocurrido un error en el inicio de sesión.'),
                               ),
                             );
                           }
